@@ -63,12 +63,14 @@ public class GaugeFniAndEdeCount extends AbstractMetricProvider {
 
         // Get EDEs by decision definition (this only includes the currently deployed definitions and may be lower than the total count)
 
+        // TODO: historicDecisionInstances are probably not equal to EDEs -> find the correct metric
+
         List<String> decisionDefinitionIds = new ArrayList<>();
 
         repositoryService.createDecisionDefinitionQuery().list().forEach(decisionDefinition -> decisionDefinitionIds.add(decisionDefinition.getId()));
 
         if (decisionDefinitionIds.size() > 0) {
-            decisionDefinitionIds.forEach(decisionDefinitionId -> fniCount.labels(decisionDefinitionId)
+            decisionDefinitionIds.forEach(decisionDefinitionId -> edeCount.labels(decisionDefinitionId)
                     .set(historyService.createHistoricDecisionInstanceQuery()
                             .decisionDefinitionId(decisionDefinitionId)
                             .count()
