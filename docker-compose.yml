@@ -2,7 +2,7 @@ version: '3'
 
 services:
   consulting-delivery:
-    image: docker.consulting.camunda.com/camunda-prometheus-exporter:latest
+    image: docker.consulting.camunda.com/prometheus-camunda-exporter:latest
     ports:
       - "8088:8088"
     environment:
