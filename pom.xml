@@ -78,6 +78,9 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<finalName>prometheus-camunda-exporter-springboot</finalName>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>

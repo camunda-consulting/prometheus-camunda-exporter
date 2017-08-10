@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  consulting-delivery:
+    image: docker.consulting.camunda.com/camunda-prometheus-exporter:latest
+    ports:
+      - "8088:8088"
+    environment:
+      - DB_URL = REPLACE_DB_URL
+      - DB_USERNAME = REPLACE_DB_USERNAME
+      - DB_PASSWORD = REPLACE_DB_PASSWORD
+    restart: always
+
+
