@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class GaugeProcessDefinitionAndInstanceCount extends AbstractMetricProvider {
+public class GaugesProcessDefinitionAndInstanceCounts extends AbstractMetricProvider {
 
     @Autowired
     RuntimeService runtimeService;

@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class GaugeFniAndEdeCount extends AbstractMetricProvider {
+public class GaugesFniAndEdeCounts extends AbstractMetricProvider {
 
     @Autowired
     ManagementService managementService;
@@ -25,14 +25,13 @@ public class GaugeFniAndEdeCount extends AbstractMetricProvider {
 
     private static final Gauge fniCount = Gauge.build()
             .name("camunda_activity_instances")
-            .help("Total number of activity instances (BPMN FNI).")
+            .help("Number of activity instances (BPMN FNI) in total and by deployed process definition.")
             .labelNames("processDefinitionId")
             .register();
 
     private static final Gauge edeCount = Gauge.build()
             .name("camunda_executed_decision_instances")
             .help("Total number of executed decision instances (DMN EDE).")
-            .labelNames("decisionDefinitionId")
             .register();
 
     @Override
@@ -59,25 +58,7 @@ public class GaugeFniAndEdeCount extends AbstractMetricProvider {
 
         // Get total number of EDEs
 
-        edeCount.labels("total").set(managementService.createMetricsQuery().name("executed-decision-elements").sum());
-
-        // Get EDEs by decision definition (this only includes the currently deployed definitions and may be lower than the total count)
-
-        // TODO: historicDecisionInstances are probably not equal to EDEs -> find the correct metric
-
-        List<String> decisionDefinitionIds = new ArrayList<>();
-
-        repositoryService.createDecisionDefinitionQuery().list().forEach(decisionDefinition -> decisionDefinitionIds.add(decisionDefinition.getId()));
-
-        if (decisionDefinitionIds.size() > 0) {
-            decisionDefinitionIds.forEach(decisionDefinitionId -> edeCount.labels(decisionDefinitionId)
-                    .set(historyService.createHistoricDecisionInstanceQuery()
-                            .decisionDefinitionId(decisionDefinitionId)
-                            .count()
-                    )
-            );
-        }
-
+        edeCount.set(managementService.createMetricsQuery().name("executed-decision-elements").sum());
 
     }
 }
