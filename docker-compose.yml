@@ -9,10 +9,11 @@ services:
       - DB_URL=REPLACE_DB_URL
       - DB_USERNAME=REPLACE_DB_USERNAME
       - DB_PASSWORD=REPLACE_DB_PASSWORD
+      - JAVA_OPTS=-Xmx128m
     restart: always
     networks:
       - camunda-exporter
-    mem_limit: 200M
+    mem_limit: 250M
 
 networks:
   camunda-exporter:
