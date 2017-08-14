@@ -1,7 +1,7 @@
 version: '3'
 
 services:
-  consulting-delivery:
+  camunda-exporter:
     image: docker.consulting.camunda.com/prometheus-camunda-exporter:latest
     ports:
       - "8088:8088"
@@ -10,5 +10,11 @@ services:
       - DB_USERNAME = REPLACE_DB_USERNAME
       - DB_PASSWORD = REPLACE_DB_PASSWORD
     restart: always
+    networks:
+      - camunda-exporter
+    mem_limit: 200M
+
+networks:
+  camunda-exporter:
 
 
