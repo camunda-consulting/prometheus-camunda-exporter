@@ -4,7 +4,7 @@ services:
   camunda-exporter:
     image: docker.consulting.camunda.com/prometheus-camunda-exporter:latest
     ports:
-      - "8088:8088"
+      - "8088:8080"
     environment:
       - DB_URL=REPLACE_DB_URL
       - DB_USERNAME=REPLACE_DB_USERNAME
@@ -13,9 +13,7 @@ services:
     restart: always
     networks:
       - camunda-exporter
-    mem_limit: 250M
+    mem_limit: 650M
 
 networks:
   camunda-exporter:
-
-
