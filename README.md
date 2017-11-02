@@ -1,8 +1,15 @@
 ### Intro
 This is a sample spring-boot application that serves prometheus metrics for Camunda BPM. It
-includes an embedded engine that connects to an existing Camunda database (same fashion as the standalone webapps).
+includes an embedded engine that connects to an existing Camunda database (same fashion as the standalone webapp).
 
 *Heads up:* If your database contains very large amounts of data, some of the queries may be slow.
+
+This archtitecture is not considered best practice to serve prometheus metrics in a production environment. 
+It is a good starting point to get something running and might be fine if the performance and load
+works for you. 
+As an alternative you might create a Camunda process engine plugin instead, that registers listeners to update
+the metrics on the fly - and the REST API just return them. This way at least some of the metrics are far
+easier to resolve, but it requires some more serious thoughts on e.g. clustering. 
 
 ### Configure it
 
@@ -48,7 +55,8 @@ Jobs and Incidents:
 Process definitions and instances:
 - camunda_deployed_process_definitions: Number of deployed process definitions.
 - camunda_deployed_process_definitions_unique:  Number of deployed process definitions, ignoring different versions of the same definition.
-- camunda_running_process_instances: Running process instances by process definition key.
+- camunda_process_instance_duration_count: Finished process instances by process definition key - count.
+- camunda_process_instance_duration_sum: Running process instances by process definition key - sum of durations.
 
 General metrics:
 - camunda_prometheus_metrics_update: Requests for prometheus metrics count and duration in seconds
